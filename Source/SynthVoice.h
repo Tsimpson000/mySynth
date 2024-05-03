@@ -27,9 +27,22 @@ public:
     //Called to let the voice know that the pitch wheel has been moved
     void pitchWheelMoved(int newPitchWheelValue) override;
 
+
+    void prepareToPlay(double sampleRate, int samplesPerBlock, int outputChannels);
+
     //Called to let the voice know that a midi controller has been moved.
     void controllerMoved(int controllerNumber, int newControllerValue) override;
 
     //Renders the next block of data for this voice.
     void renderNextBlock(juce::AudioBuffer< float >& outputBuffer, int startSample, int numSamples) override;
+
+private:
+    //declare ADSR objects
+    juce::ADSR adsr;
+    juce::ADSR::Parameters adsrParameters;
+
+    //declare oscillator
+    juce::dsp::Oscillator<float> osc{ [](float x) {return std::sin(x);} };
+    juce::dsp::Gain<float> gain;
+    bool isPrepared{ false };
 };

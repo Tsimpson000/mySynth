@@ -96,11 +96,20 @@ void MySynthAudioProcessor::changeProgramName (int index, const juce::String& ne
 void MySynthAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
 {
     synth.setCurrentPlaybackSampleRate(sampleRate);
+
+    //if succesffuly cast as synth , call prepareToPlay method
+    for (int i = 0; i < synth.getNumVoices(); i++)
+    {
+        if (auto voice = dynamic_cast<SynthVoice*>(synth.getVoice(i)))
+        {
+            voice->prepareToPlay(sampleRate, samplesPerBlock, getTotalNumOutputChannels());
+        }
+    }
 }
 
 void MySynthAudioProcessor::releaseResources()
 {
-    // When playback stops, you can use this as an opportunity to free up any
+     // When playback stops, you can use this as an opportunity to free up any
     // spare memory, etc.
 }
 
