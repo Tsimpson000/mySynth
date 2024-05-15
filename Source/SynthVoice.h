@@ -36,13 +36,16 @@ public:
     //Renders the next block of data for this voice.
     void renderNextBlock(juce::AudioBuffer< float >& outputBuffer, int startSample, int numSamples) override;
 
+    void updateADSR(const float attack, const float decay, const float sustain, const float release);
+
 private:
     //declare ADSR objects
     juce::ADSR adsr;
     juce::ADSR::Parameters adsrParameters;
+    juce::AudioBuffer<float> synthBuffer;
 
     //declare oscillator
-    juce::dsp::Oscillator<float> osc{ [](float x) {return std::sin(x);} };
+    juce::dsp::Oscillator<float> osc{ [](float x) {return x / juce::MathConstants<float>::pi;} };
     juce::dsp::Gain<float> gain;
     bool isPrepared{ false };
 };

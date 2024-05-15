@@ -55,7 +55,14 @@ public:
     void getStateInformation (juce::MemoryBlock& destData) override;
     void setStateInformation (const void* data, int sizeInBytes) override;
 
+    //create object 
+    juce::AudioProcessorValueTreeState apvts;
+
 private:
+    //The ParameterLayout class allows you to specify the parameters that your audio processor will expose to the host environment.
+    //You can define and organizer parameters, attach listeners, and define serialized settings to save and load. 
+    juce::AudioProcessorValueTreeState::ParameterLayout createParameters();
+
     //declare synth object
     juce::Synthesiser synth;
     //==============================================================================

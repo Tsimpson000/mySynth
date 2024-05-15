@@ -30,3 +30,11 @@ Lessons Learned:
 -fun juce objects that do the math for waves like sine, saw, square, etc. 
 -Starting a stopping notes
 -the importance of rendering next block
+
+
+*Date: May 8th
+
+Features:
+
+Lessons Learned:
+-using * to dereference pointer 
