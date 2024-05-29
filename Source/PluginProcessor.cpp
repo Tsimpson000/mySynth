@@ -226,7 +226,7 @@ juce::AudioProcessorValueTreeState::ParameterLayout MySynthAudioProcessor::creat
     // Sustain - float
     params.push_back(std::make_unique<juce::AudioParameterFloat>(juce::ParameterID{ "SUSTAIN", 1 }, "Sustain", juce::NormalisableRange<float>{0.1f, 1.0f}, 1.0f));
     // Release - float
-    params.push_back(std::make_unique<juce::AudioParameterFloat>(juce::ParameterID{ "REALEASE", 1 }, "Release", juce::NormalisableRange<float>{0.1f, 3.0f}, 0.1f));
+    params.push_back(std::make_unique<juce::AudioParameterFloat>(juce::ParameterID{ "RELEASE", 1 }, "Release", juce::NormalisableRange<float>{0.1f, 3.0f}, 0.1f));
 
     //return vector
     return { params.begin(), params.end() };
