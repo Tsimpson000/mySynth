@@ -35,6 +35,19 @@ Lessons Learned:
 *Date: May 8th
 
 Features:
+-Attack, Decay, Sustain, Release parameters wired to GUI.
 
 Lessons Learned:
--using * to dereference pointer 
+-using * to de-reference pointer 
+
+
+Date: May 28th
+
+Features:
+-Can open the VST3 file in Ableton to use plugin 
+-All ADSR parameters are verified working
+-Producing sounds with hertz signal from MIDI input verified
+
+Lessons Learned:
+-How to compile the project properly to work on a DAW
+-How to pass audio from the DAW to OBS to grab proper screen recording
