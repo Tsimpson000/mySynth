@@ -1,4 +1,4 @@
-Date: April 28th
+*Date: April 28th
 
 
 Features: 
@@ -19,7 +19,7 @@ Lessons Learned:
 -implement a single synth voice for a monophonic synth
 
 
-Date: May 5th
+*Date: May 5th
 
 Features:
 -Created a simple oscilator
@@ -41,7 +41,7 @@ Lessons Learned:
 -using * to de-reference pointer 
 
 
-Date: May 28th
+*Date: May 28th
 
 Features:
 -Can open the VST3 file in Ableton to use plugin 
@@ -51,3 +51,15 @@ Features:
 Lessons Learned:
 -How to compile the project properly to work on a DAW
 -How to pass audio from the DAW to OBS to grab proper screen recording
+
+*Date: June 4th
+
+Features:
+-Modified GUI of ADSR sliders. They now are longer to make slighter adjustments. Also positioned to the right. 
+-Added ComboBox for selecting different wave patterns for your oscilator.
+-Added seperate classes for components to make code cleaner overall
+
+Lessons Learned:
+-How to create new classes with their own cpp and header files, and to #include them in the necessary files. 
+-How to switch between seperate waves when prompted by user
+-More general GUI within JUCE framework

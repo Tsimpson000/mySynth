@@ -163,8 +163,11 @@ void MySynthAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce
             auto& decay = *apvts.getRawParameterValue("DECAY");
             auto& sustain = *apvts.getRawParameterValue("SUSTAIN");
             auto& release = *apvts.getRawParameterValue("RELEASE");
-            voice->updateADSR(attack.load(), decay.load(), sustain.load(), release.load());
-            
+
+            auto& oscWaveChoice = *apvts.getRawParameterValue("OSC1WAVETYPE");
+
+            voice->update(attack.load(), decay.load(), sustain.load(), release.load());
+            voice->getOscillator().setWaveType(oscWaveChoice);
             
             //lfo
         }
@@ -227,6 +230,8 @@ juce::AudioProcessorValueTreeState::ParameterLayout MySynthAudioProcessor::creat
     params.push_back(std::make_unique<juce::AudioParameterFloat>(juce::ParameterID{ "SUSTAIN", 1 }, "Sustain", juce::NormalisableRange<float>{0.1f, 1.0f}, 1.0f));
     // Release - float
     params.push_back(std::make_unique<juce::AudioParameterFloat>(juce::ParameterID{ "RELEASE", 1 }, "Release", juce::NormalisableRange<float>{0.1f, 3.0f}, 0.1f));
+    //parameter used to select wave type
+    params.push_back(std::make_unique<juce::AudioParameterChoice>("OSC1WAVETYPE", "Osc 1 Wave Type", juce::StringArray{ "Sine", "Saw", "Square" }, 0));
 
     //return vector
     return { params.begin(), params.end() };

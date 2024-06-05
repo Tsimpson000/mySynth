@@ -18,11 +18,16 @@
       <GROUP id="{56330C54-DFC7-CC39-8E68-5F27B7E4194F}" name="Data">
         <FILE id="HzOFdt" name="AdsrData.cpp" compile="1" resource="0" file="Source/Data/AdsrData.cpp"/>
         <FILE id="OEHOdE" name="AdsrData.h" compile="0" resource="0" file="Source/Data/AdsrData.h"/>
+        <FILE id="Xfr8vH" name="OscData.cpp" compile="1" resource="0" file="Source/Data/OscData.cpp"/>
+        <FILE id="XaeiEd" name="OscData.h" compile="0" resource="0" file="Source/Data/OscData.h"/>
       </GROUP>
       <GROUP id="{FEF6AF20-5CEA-2C45-D9EB-FAB44DE83354}" name="UI">
         <FILE id="yrmucV" name="AdsrComponent.cpp" compile="1" resource="0"
               file="Source/UI/AdsrComponent.cpp"/>
         <FILE id="wqeewz" name="AdsrComponent.h" compile="0" resource="0" file="Source/UI/AdsrComponent.h"/>
+        <FILE id="eUDyMk" name="OscComponent.cpp" compile="1" resource="0"
+              file="Source/UI/OscComponent.cpp"/>
+        <FILE id="hbvPhG" name="OscComponent.h" compile="0" resource="0" file="Source/UI/OscComponent.h"/>
       </GROUP>
     </GROUP>
   </MAINGROUP>
