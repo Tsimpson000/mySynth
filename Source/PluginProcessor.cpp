@@ -155,21 +155,36 @@ void MySynthAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce
         //if our voice is calling from SynthVoice
         if (auto voice = dynamic_cast<SynthVoice*>(synth.getVoice(i))) 
         {
-            //osc control
-            
-
             //adsr
             auto& attack = *apvts.getRawParameterValue("ATTACK");
             auto& decay = *apvts.getRawParameterValue("DECAY");
             auto& sustain = *apvts.getRawParameterValue("SUSTAIN");
             auto& release = *apvts.getRawParameterValue("RELEASE");
 
+            //osc wave
             auto& oscWaveChoice = *apvts.getRawParameterValue("OSC1WAVETYPE");
 
-            voice->update(attack.load(), decay.load(), sustain.load(), release.load());
-            voice->getOscillator().setWaveType(oscWaveChoice);
+            //LFO
+            auto& fmDepth = *apvts.getRawParameterValue("FMDEPTH");
+            auto& fmFrequency = *apvts.getRawParameterValue("FMFREQ");
+
+            //Filter
+            auto& filterType = *apvts.getRawParameterValue("FILTERTYPE");
+            auto& filterCutoff = *apvts.getRawParameterValue("FILTERFREQ");
+            auto& filterRes = *apvts.getRawParameterValue("FILTERRES");
+
+            //Filter Adsr
+            auto& fAttack = *apvts.getRawParameterValue("FILTERATTACK");
+            auto& fDecay = *apvts.getRawParameterValue("FILTERDECAY");
+            auto& fSustain = *apvts.getRawParameterValue("FILTERSUSTAIN");
+            auto& fRelease = *apvts.getRawParameterValue("FILTERRELEASE");
+
+                voice->getOscillator().setWaveType (oscWaveChoice);
+                voice->getOscillator().updateFm (fmFrequency, fmDepth);
+                voice->getAdsr().update (attack.load(), decay.load(), sustain.load(), release.load());
+                voice->getFilterAdsr().update (fAttack.load(), fDecay.load(), fSustain.load(), fRelease.load());
+                voice->updateFilter (filterType, filterCutoff, filterRes);
             
-            //lfo
         }
     }
 
@@ -217,21 +232,45 @@ juce::AudioProcessorValueTreeState::ParameterLayout MySynthAudioProcessor::creat
     //create vector to return parameter layout
     std::vector<std::unique_ptr<juce::RangedAudioParameter>> params;
 
+    //FM mod
+    ///parameter used to select FM Frequency
+    params.push_back(std::make_unique<juce::AudioParameterFloat>(juce::ParameterID{ "FMFREQ", 1 }, "FM Frequency", juce::NormalisableRange<float>{0.0f, 1000.0f, 0.01f, 0.3f}, 0.0f));
+    ///parameter used to select Frequency Depth
+    params.push_back(std::make_unique<juce::AudioParameterFloat>(juce::ParameterID{ "FMDEPTH", 1 }, "FM Depth", juce::NormalisableRange<float>{0.0f, 1000.0f, 0.01f, 0.3f}, 0.0f));
 
-    // combo box to switch oscillator - choice
-    params.push_back(std::make_unique<juce::AudioParameterChoice>("OSC", "Oscillator", juce::StringArray{"Sine", "Saw", "Square"}, 0));
 
+    //ADSR Envelope
+    ///parameter used to select Attack 
+    params.push_back(std::make_unique<juce::AudioParameterFloat>(juce::ParameterID{ "ATTACK", 1 }, "Attack", juce::NormalisableRange<float>{0.1f, 1.0f, 0.01f}, 0.1f));
+    ///parameter used to select Decay
+    params.push_back(std::make_unique<juce::AudioParameterFloat>(juce::ParameterID{ "DECAY", 1 }, "Decay", juce::NormalisableRange<float>{0.1f, 1.0f, 0.01f}, 0.1f));
+    ///parameter used to select Sustain
+    params.push_back(std::make_unique<juce::AudioParameterFloat>(juce::ParameterID{ "SUSTAIN", 1 }, "Sustain", juce::NormalisableRange<float>{0.1f, 1.0f, 0.01f}, 1.0f));
+    ///parameter used to select Release
+    params.push_back(std::make_unique<juce::AudioParameterFloat>(juce::ParameterID{ "RELEASE", 1 }, "Release", juce::NormalisableRange<float>{0.1f, 3.0f, 0.01f}, 0.1f));
 
-    // Attack - float
-    params.push_back(std::make_unique<juce::AudioParameterFloat>(juce::ParameterID{ "ATTACK", 1 }, "Attack", juce::NormalisableRange<float>{0.1f, 1.0f}, 0.1f));
-    // Decay - float
-    params.push_back(std::make_unique<juce::AudioParameterFloat>(juce::ParameterID{ "DECAY", 1 }, "Decay", juce::NormalisableRange<float>{0.1f, 1.0f}, 0.1f));
-    // Sustain - float
-    params.push_back(std::make_unique<juce::AudioParameterFloat>(juce::ParameterID{ "SUSTAIN", 1 }, "Sustain", juce::NormalisableRange<float>{0.1f, 1.0f}, 1.0f));
-    // Release - float
-    params.push_back(std::make_unique<juce::AudioParameterFloat>(juce::ParameterID{ "RELEASE", 1 }, "Release", juce::NormalisableRange<float>{0.1f, 3.0f}, 0.1f));
+    //Wave form selector
     //parameter used to select wave type
     params.push_back(std::make_unique<juce::AudioParameterChoice>("OSC1WAVETYPE", "Osc 1 Wave Type", juce::StringArray{ "Sine", "Saw", "Square" }, 0));
+
+    //Filter
+    ///parameter used to select filter type
+    params.push_back(std::make_unique<juce::AudioParameterChoice>("FILTERTYPE", "Filter Type", juce::StringArray{ "Low-Pass", "Band-Pass", "High-Pass" }, 0));
+    ///parameter used to select filter frequency
+    params.push_back(std::make_unique<juce::AudioParameterFloat>("FILTERFREQ", "Filter Freq", juce::NormalisableRange<float> { 20.0f, 20000.0f, 0.1f, 0.6f }, 200.0f));
+    ///parameter used to select filter resonance
+    params.push_back(std::make_unique<juce::AudioParameterFloat>("FILTERRES", "Filter Resonance", juce::NormalisableRange<float> { 1.0f, 10.0f, 0.1f }, 1.0f));
+
+
+    //Filter ADSR Envelope
+    ///parameter used to select Attack 
+    params.push_back(std::make_unique<juce::AudioParameterFloat>("FILTERATTACK", "Filter Attack", juce::NormalisableRange<float> { 0.1f, 1.0f, 0.1f }, 0.1f));
+    ///parameter used to select Release 
+    params.push_back(std::make_unique<juce::AudioParameterFloat>("FILTERDECAY", "Filter Decay", juce::NormalisableRange<float> { 0.1f, 1.0f, 0.1f }, 0.1f));
+    ///parameter used to select Sustain 
+    params.push_back(std::make_unique<juce::AudioParameterFloat>("FILTERSUSTAIN", "Filter Sustain", juce::NormalisableRange<float> { 0.1f, 1.0f, 0.1f }, 1.0f));
+    ///parameter used to select Release 
+    params.push_back(std::make_unique<juce::AudioParameterFloat>("FILTERRELEASE", "Filter Release", juce::NormalisableRange<float> { 0.1f, 3.0f, 0.1f }, 0.4f));
 
     //return vector
     return { params.begin(), params.end() };

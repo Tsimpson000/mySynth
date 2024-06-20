@@ -643,10 +643,16 @@
     <ClCompile Include="..\..\Source\Data\AdsrData.cpp">
       <Filter>mySynth\Source\Data</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\Data\FilterData.cpp">
+      <Filter>mySynth\Source\Data</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\Data\OscData.cpp">
       <Filter>mySynth\Source\Data</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\UI\AdsrComponent.cpp">
+      <Filter>mySynth\Source\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\UI\FilterComponent.cpp">
       <Filter>mySynth\Source\UI</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\UI\OscComponent.cpp">
@@ -3243,10 +3249,16 @@
     <ClInclude Include="..\..\Source\Data\AdsrData.h">
       <Filter>mySynth\Source\Data</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Source\Data\FilterData.h">
+      <Filter>mySynth\Source\Data</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\Data\OscData.h">
       <Filter>mySynth\Source\Data</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\UI\AdsrComponent.h">
+      <Filter>mySynth\Source\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\UI\FilterComponent.h">
       <Filter>mySynth\Source\UI</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\UI\OscComponent.h">
