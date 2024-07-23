@@ -39,10 +39,10 @@ public:
     //Renders the next block of data for this voice.
     void renderNextBlock(juce::AudioBuffer< float >& outputBuffer, int startSample, int numSamples) override;
 
-    void updateAdsr(const float attack, const float decay, const float sustain, const float release);
+    //void updateAdsr(const float attack, const float decay, const float sustain, const float release);
 
     void updateFilter(const int filterType, const float cutoff, const float resonance);
-    void updateModAdsr(const float attack, const float decay, const float sustain, const float release);
+    //void updateModAdsr(const float attack, const float decay, const float sustain, const float release);
 
     OscData& getOscillator() { return osc; }
     AdsrData& getAdsr() { return adsr; }

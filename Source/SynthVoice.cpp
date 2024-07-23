@@ -50,6 +50,8 @@ void SynthVoice::prepareToPlay(double sampleRate, int samplesPerBlock, int outpu
     spec.sampleRate = sampleRate;
     spec.numChannels = outputChannels;
 
+    synthBuffer.setSize(outputChannels, samplesPerBlock, false, true, true);
+
     osc.prepareToPlay(spec);
     adsr.setSampleRate(sampleRate);
     filter.prepareToPlay(sampleRate, samplesPerBlock, outputChannels);
@@ -63,10 +65,10 @@ void SynthVoice::prepareToPlay(double sampleRate, int samplesPerBlock, int outpu
 
 }
 
-void SynthVoice::updateAdsr(const float attack, const float decay, const float sustain, const float release)
-{
-    adsr.update(attack, decay, sustain, release);
-}
+//void SynthVoice::updateAdsr(const float attack, const float decay, const float sustain, const float release)
+//{
+//    adsr.update(attack, decay, sustain, release);
+//}
 
 void SynthVoice::controllerMoved(int controllerNumber, int newControllerValue)
 {
@@ -80,8 +82,6 @@ void SynthVoice::renderNextBlock(juce::AudioBuffer< float > &outputBuffer, int s
     if (!isVoiceActive())
         return;
     
-    synthBuffer.setSize(outputBuffer.getNumChannels(), numSamples, false, false, true);
-    filterAdsr.applyEnvelopeToBuffer(synthBuffer, 0, numSamples);
     synthBuffer.clear();
 
     juce::dsp::AudioBlock<float> audioBlock{ synthBuffer };
@@ -95,11 +95,6 @@ void SynthVoice::renderNextBlock(juce::AudioBuffer< float > &outputBuffer, int s
     for (int channel = 0; channel < outputBuffer.getNumChannels(); ++channel) 
     {
         outputBuffer.addFrom(channel, startSample, synthBuffer, channel, 0, numSamples);
-
-        if (! adsr.isActive())
-        {
-            clearCurrentNote();
-        }
     }
 
 }
@@ -110,7 +105,7 @@ void SynthVoice::updateFilter(const int filterType, const float cutoff, const fl
     filter.updateParameters(filterType, cutoff, resonance, modulator);
 }
 
-void SynthVoice::updateModAdsr(const float attack, const float decay, const float sustain, const float release)
-{
-    filterAdsr.update(attack, decay, sustain, release);
-}
+//void SynthVoice::updateModAdsr(const float attack, const float decay, const float sustain, const float release)
+//{
+//    filterAdsr.update(attack, decay, sustain, release);
+//}

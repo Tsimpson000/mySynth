@@ -1,65 +1,44 @@
-*Date: April 28th
+Certainly! Here's a comprehensive README file that you can use for your project portfolio:
 
+---
 
-Features: 
--Implemented synth voice and sound subclass
--Ability to call JUCE objects
--SynthSound class inherit juce::SynthesiserSound and applied necessary functions
--Include SynthSound header into SynthVoice header
--SynthVoice class inherit juce::SynthesiserSound and applied necessary functions
--Implented SynthVoice methods in SynthVoice.cpp
--Included SynthSound, SynthVoice and JuceHeader into PluginProcesorr.h (which is responsible for playing sounds)
--added new SynthSound & SynthVoice to PluginProcesorr.cpp
--Set SampleRate in PluginProcesorr.cpp
+# MySynth Plugin
 
-Lessons Learned:
--Difference between .cpp and .h
--#include implentation
--syntax for inheritance and functions/methods
--implement a single synth voice for a monophonic synth
+MySynth is an FM synthesizer audio plugin developed using the JUCE framework. It allows users to create and manipulate various sounds using oscillators, envelopes, filters, and modulation parameters.
 
+## Features
 
-*Date: May 5th
+- **Oscillator:** Supports sine, saw, and square waveforms with adjustable frequency and depth for frequency modulation (FM).
+- **ADSR Envelope:** Adjustable Attack, Decay, Sustain, and Release parameters for shaping the amplitude envelope of the sound.
+- **Filter:** Includes low-pass, band-pass, and high-pass filters with adjustable cutoff frequency and resonance.
+- **Filter ADSR Envelope:** Independent Attack, Decay, Sustain, and Release parameters for the filter envelope.
+- **MIDI Support:** Accepts MIDI input for note triggering and modulation control.
+- **Parameter Automation:** All parameters are controllable via the plugin interface and can be automated within a DAW (Digital Audio Workstation).
+- **Customizable GUI:** Provides a graphical user interface (GUI) with separate sections for oscillator settings, ADSR envelopes, and filter controls.
 
-Features:
--Created a simple oscilator
--Implemented Sine wave sound
--Implemented user MIDI input to hertz
+## Installation
 
-Lessons Learned:
--fun juce objects that do the math for waves like sine, saw, square, etc. 
--Starting a stopping notes
--the importance of rendering next block
+1. Clone the repository from.
+2. Open the project in your preferred IDE with JUCE installed.
+3. Build the project to generate the plugin binary.
+4. Locate the compiled plugin file (`.vst`, `.vst3`, or `.au`) in the build output directory.
 
+## Usage
 
-*Date: May 8th
+### Using the Plugin
 
-Features:
--Attack, Decay, Sustain, Release parameters wired to GUI.
+1. **Host Integration:** Load the plugin in any compatible DAW or audio host application.
+2. **Interface Overview:**
+   - **Oscillator Section:** Choose waveform type (sine, saw, square), adjust frequency modulation (FM) depth and frequency.
+   - **ADSR Envelope Section:** Set Attack, Decay, Sustain, and Release times for amplitude modulation.
+   - **Filter Section:** Select filter type (low-pass, band-pass, high-pass), adjust cutoff frequency and resonance.
+   - **Filter ADSR Section:** Adjust Attack, Decay, Sustain, and Release times for filter modulation.
+3. **MIDI Control:** Use MIDI keyboard or MIDI input to trigger notes and control modulation parameters.
 
-Lessons Learned:
--using * to de-reference pointer 
+### Developer Notes
 
-
-*Date: May 28th
-
-Features:
--Can open the VST3 file in Ableton to use plugin 
--All ADSR parameters are verified working
--Producing sounds with hertz signal from MIDI input verified
-
-Lessons Learned:
--How to compile the project properly to work on a DAW
--How to pass audio from the DAW to OBS to grab proper screen recording
-
-*Date: June 4th
-
-Features:
--Modified GUI of ADSR sliders. They now are longer to make slighter adjustments. Also positioned to the right. 
--Added ComboBox for selecting different wave patterns for your oscilator.
--Added seperate classes for components to make code cleaner overall
-
-Lessons Learned:
--How to create new classes with their own cpp and header files, and to #include them in the necessary files. 
--How to switch between seperate waves when prompted by user
--More general GUI within JUCE framework
+- **Project Structure:** The project consists of `PluginProcessor.cpp/h`, `PluginEditor.cpp/h`, `SynthVoice.cpp/h`, and `SynthSound.h`.
+- **Parameter Handling:** Parameters are managed using `AudioProcessorValueTreeState` for seamless integration with DAW automation.
+- **Synthesis Logic:** Synthesis logic is encapsulated in `SynthVoice`, handling note triggering, envelope processing, and rendering audio.
+- **Filtering:** Filter processing is implemented with support for ADSR envelope modulation.
+- **Graphics:** GUI components (`PluginEditor`) are customized to provide intuitive controls for oscillator, ADSR, and filter parameters.
