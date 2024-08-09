@@ -1,7 +1,3 @@
-Certainly! Here's a comprehensive README file that you can use for your project portfolio:
-
----
-
 # MySynth Plugin
 
 MySynth is an FM synthesizer audio plugin developed using the JUCE framework. It allows users to create and manipulate various sounds using oscillators, envelopes, filters, and modulation parameters.
